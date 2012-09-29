@@ -27,12 +27,12 @@
     <ClCompile Include="..\src\CurlTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\Communicator.cpp">
+    <ClCompile Include="..\..\..\src\Curl.cpp">
       <Filter>Blocks\Curl</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\src\Communicator.h">
+    <ClInclude Include="..\..\..\src\Curl.h">
       <Filter>Blocks\Curl</Filter>
     </ClInclude>
   </ItemGroup>

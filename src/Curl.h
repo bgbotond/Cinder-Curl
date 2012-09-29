@@ -1,5 +1,5 @@
-#ifndef __COMMUNICATOR_H_INCLUDED__
-#define __COMMUNICATOR_H_INCLUDED__
+#ifndef __CURL_H_INCLUDED__
+#define __CURL_H_INCLUDED__
 
 #include <map>
 #include <string>
@@ -9,11 +9,11 @@
 
 namespace mndl { namespace curl {
 
-class Communicator
+class Curl
 {
 public:
-	Communicator(){};
-	~Communicator(){};
+	Curl(){};
+	~Curl(){};
 	static std::string post( const std::string &url, std::vector<std::string>           &params );
 	static std::string post( const std::string &url, std::map<std::string, std::string> &params );
 	static std::string get ( const std::string &url );
@@ -27,4 +27,4 @@ protected:
 
 } } // namespace mndl::curl
 
-#endif // __COMMUNICATOR_H_INCLUDED__
+#endif // __CURL_H_INCLUDED__

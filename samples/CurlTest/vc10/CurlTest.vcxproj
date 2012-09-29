@@ -11,11 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\Communicator.cpp" />
+    <ClCompile Include="..\..\..\src\Curl.cpp" />
     <ClCompile Include="..\src\CurlTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\src\Communicator.h" />
+    <ClInclude Include="..\..\..\src\Curl.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\curlTest.php" />

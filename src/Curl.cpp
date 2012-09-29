@@ -1,12 +1,12 @@
 #include <sstream>
 #include <iostream>
-#include "Communicator.h"
+#include "Curl.h"
 
 using namespace std;
 
 namespace mndl { namespace curl {
 
-string Communicator::post( const string &url, vector<string> &m )
+string Curl::post( const string &url, vector<string> &m )
 {
 	bool   usePost    = true;
 	string postString = "";
@@ -20,13 +20,13 @@ string Communicator::post( const string &url, vector<string> &m )
 		st.str( string());
 		st << count++;
 
-		postString += st.str() + "=" + Communicator::urlEncode( *act ) + "&";
+		postString += st.str() + "=" + Curl::urlEncode( *act ) + "&";
 	}
 
 	return easyCurl( url, usePost, postString );
 }
 
-string Communicator::post( const string &url, map<string, string> &m )
+string Curl::post( const string &url, map<string, string> &m )
 {
 	bool   usePost    = true;
 	string postString = "";
@@ -34,13 +34,13 @@ string Communicator::post( const string &url, map<string, string> &m )
 	map<string, string>::iterator act, end;
 	for( act = m.begin(), end = m.end(); act != end; ++act )
 	{
-		postString += act->first + "=" + Communicator::urlEncode( act->second ) + "&";
+		postString += act->first + "=" + Curl::urlEncode( act->second ) + "&";
 	}
 
 	return easyCurl( url, usePost, postString );
 }
 
-string Communicator::get( const string &url )
+string Curl::get( const string &url )
 {
 	bool   usePost = false;
 	string params  = "";
@@ -48,7 +48,7 @@ string Communicator::get( const string &url )
 	return easyCurl( url, usePost, params );
 }
 
-int Communicator::writer( char *data, size_t size, size_t nmemb, string *buffer )
+int Curl::writer( char *data, size_t size, size_t nmemb, string *buffer )
 {
 	int result = 0;
 	if( buffer != NULL )
@@ -59,7 +59,7 @@ int Communicator::writer( char *data, size_t size, size_t nmemb, string *buffer 
 	return result;
 }
 
-string Communicator::easyCurl( const string &url, bool post, const string &postParamString )
+string Curl::easyCurl( const string &url, bool post, const string &postParamString )
 {
 	string buffer = "";
 	char errorBuffer[CURL_ERROR_SIZE];
@@ -104,7 +104,7 @@ string Communicator::easyCurl( const string &url, bool post, const string &postP
 	}
 }
 
-string Communicator::urlEncode( const string &c )
+string Curl::urlEncode( const string &c )
 {
 	string escaped = "";
 	int max = c.length();
@@ -126,7 +126,7 @@ string Communicator::urlEncode( const string &c )
 	return escaped;
 }
 
-string Communicator::char2Hex( char dec )
+string Curl::char2Hex( char dec )
 {
 	char dig1 = ( dec & 0xF0 ) >> 4;
 	char dig2 = ( dec & 0x0F );

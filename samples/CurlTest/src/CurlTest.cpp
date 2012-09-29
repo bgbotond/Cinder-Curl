@@ -1,4 +1,4 @@
-#include "Communicator.h"
+#include "Curl.h"
 
 #include <iostream>
 
@@ -23,7 +23,7 @@ static void testPostVector()
 	strings.push_back( "vector value1");
 	strings.push_back( "vector value2");
 
-	cout << "test post vector: " << Communicator::post( "localhost/curlTest.php", strings );
+	cout << "test post vector: " << Curl::post( "localhost/curlTest.php", strings );
 }
 
 static void testPostMap()
@@ -33,10 +33,10 @@ static void testPostMap()
 	strings.insert(pair<string, string>( "first" , "map value1" ));
 	strings.insert(pair<string, string>( "second", "map value2" ));
 
-	cout << "test post map: " << Communicator::post( "localhost/curlTest.php", strings ) << endl;
+	cout << "test post map: " << Curl::post( "localhost/curlTest.php", strings ) << endl;
 }
 
 static void testGet()
 {
-	cout << "test get: " << Communicator::get( "localhost/curlTest.php" ) << endl;
+	cout << "test get: " << Curl::get( "localhost/curlTest.php" ) << endl;
 }
