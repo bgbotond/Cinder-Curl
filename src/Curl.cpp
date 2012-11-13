@@ -83,9 +83,9 @@ string Curl::easyCurl( const string &url, bool post, const string &postParamStri
 		curl_easy_setopt( curl, CURLOPT_POST      , 1                      );
 		curl_easy_setopt( curl, CURLOPT_POSTFIELDS, postParamString.c_str());
 	}
-	curl_easy_setopt( curl, CURLOPT_SSL_VERIFYHOST,  2                                                    );
+	curl_easy_setopt( curl, CURLOPT_SSL_VERIFYHOST, 2                                                     );
 	curl_easy_setopt( curl, CURLOPT_USERAGENT     , "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)" );
-	curl_easy_setopt( curl, CURLOPT_SSL_VERIFYPEER, FALSE                                                 ); // this line makes it work under https
+	curl_easy_setopt( curl, CURLOPT_SSL_VERIFYPEER, 0                                                 ); // this line makes it work under https
 	curl_easy_setopt( curl, CURLOPT_COOKIEFILE    , "cookies.txt"                                         ); // read from
 	curl_easy_setopt( curl, CURLOPT_COOKIEJAR     , "cookies.txt"                                         ); // write to
 
