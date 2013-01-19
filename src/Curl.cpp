@@ -48,6 +48,67 @@ string Curl::get( const string &url )
 	return easyCurl( url, usePost, params );
 }
 
+bool Curl::ftpUpload( const std::string &ftpUrl, const std::string &userName, const std::string &password, const ci::fs::path &path )
+{
+	bool ret = true;
+	CURL *curl = curl_easy_init();
+	CURLcode  res;
+
+	if( ! curl )
+		return false;
+
+	FILE        *fileSource;
+	curl_off_t   fileSize;
+	std::string  fileName = path.filename().string();
+	std::string  tempName = fileName + ".uploading";
+	std::string  renameFromCommand = "RNFR " + tempName;
+	std::string  renameToCommand   = "RNTO " + fileName;
+	std::string  urlFullPath   = ftpUrl + "/" + tempName;
+	std::string  userPass = userName + ":" + password;
+
+	struct curl_slist *headerList = NULL;
+
+	if( ! ci::fs::exists( path ))
+	{
+		cerr << "error: " << "Couldn't open file: " << path << endl;
+		curl_easy_cleanup( curl );
+		curl_global_cleanup();
+		return false;
+	}
+
+	fileSize = (curl_off_t)ci::fs::file_size( path );
+
+	fopen_s( &fileSource, path.string().c_str(), "rb" ); // get a FILE * of the same file
+
+	curl_global_init( CURL_GLOBAL_ALL ); // In windows, this will init the winsock stuff
+
+	// build a list of commands to pass to libcurl
+	headerList = curl_slist_append( headerList, renameFromCommand.c_str());
+	headerList = curl_slist_append( headerList, renameToCommand.c_str());
+
+	curl_easy_setopt( curl, CURLOPT_UPLOAD          , 1L                        ); // enable uploading
+	curl_easy_setopt( curl, CURLOPT_URL             , urlFullPath.c_str()       ); // specify target
+	curl_easy_setopt( curl, CURLOPT_USERPWD         , userPass.c_str()          ); // specify user/password
+	curl_easy_setopt( curl, CURLOPT_POSTQUOTE       , headerList                ); // pass in that last of FTP commands to run after the transfer
+	curl_easy_setopt( curl, CURLOPT_READDATA        , fileSource                ); // now specify which file to upload
+	curl_easy_setopt( curl, CURLOPT_INFILESIZE_LARGE, fileSize                  ); // Set the size of the file to upload (optional).  If you give a *_LARGE option you MUST make sure that the type of the passed-in argument is a curl_off_t. If you use CURLOPT_INFILESIZE (without _LARGE) you must make sure that to pass in a type 'long' argument
+
+	res = curl_easy_perform( curl );
+
+	if( res != CURLE_OK )
+	{
+		cerr << "error: " << curl_easy_strerror( res ) << endl;
+		ret = false;
+	}
+
+	curl_slist_free_all( headerList ); // clean up the FTP commands list
+	curl_easy_cleanup( curl );
+	fclose( fileSource );
+	curl_global_cleanup();
+
+	return ret;
+}
+
 int Curl::writer( char *data, size_t size, size_t nmemb, string *buffer )
 {
 	int result = 0;

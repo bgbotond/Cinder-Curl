@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+#include "cinder/Filesystem.h"
+
 #include <curl/curl.h>
 
 namespace mndl { namespace curl {
@@ -17,6 +19,7 @@ public:
 	static std::string post( const std::string &url, std::vector<std::string>           &params );
 	static std::string post( const std::string &url, std::map<std::string, std::string> &params );
 	static std::string get ( const std::string &url );
+	static bool        ftpUpload( const std::string &ftpUrl, const std::string &userName, const std::string &password, const ci::fs::path &path );
 
 protected:
 	static int writer( char *data, size_t size, size_t nmemb, std::string *buffer );

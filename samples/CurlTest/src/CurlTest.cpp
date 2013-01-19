@@ -8,12 +8,14 @@ using namespace mndl::curl;
 static void testPostVector();
 static void testPostMap();
 static void testGet();
+static void testFtp();
 
 int main(int argc, char *argv[])
 {
 	testPostVector();
 	testPostMap();
 	testGet();
+	testFtp();
 }
 
 static void testPostVector()
@@ -39,4 +41,12 @@ static void testPostMap()
 static void testGet()
 {
 	cout << "test get: " << Curl::get( "localhost/curlTest.php" ) << endl;
+}
+
+static void testFtp()
+{
+	if( Curl::ftpUpload( "ftpurl", "username", "password", "file" ))
+		cout << "success" << endl;
+	else
+		cout << "failed" << endl;
 }
