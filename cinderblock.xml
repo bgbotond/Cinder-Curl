@@ -7,12 +7,19 @@
 	summary="This is the curl CinderBlock, designed for use with the open-source C++ library Cinder"
 	core="true"
 	>
-  <platform os="msw">
-    <includePath>src/curl</includePath>
-    <staticLibrary>lib/msw/libcurl.lib</staticLibrary>
-  </platform>
-  <sourcePattern>src/*.cpp</sourcePattern>
-  <headerPattern>src/*.h</headerPattern>
-  <includePath>src</includePath>
+	<platform compiler="vc10">
+		<platform config="Debug">
+			<staticLibrary>lib/msw/libcurld.lib</staticLibrary>
+		</platform>
+		<platform config="release">
+			<staticLibrary>lib/msw/libcurl.lib</staticLibrary>
+		</platform>
+	</platform>
+	<platform os="macosx">
+	</platform>
+	<sourcePattern>src/*.cpp</sourcePattern>
+	<headerPattern>src/*.h</headerPattern>
+	<includePath>src/curl</includePath>
+	<includePath>src</includePath>
 </block>
 </cinder>
