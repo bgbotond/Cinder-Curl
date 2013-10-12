@@ -78,7 +78,7 @@ bool Curl::ftpUpload( const std::string &ftpUrl, const std::string &userName, co
 
 	fileSize = (curl_off_t)ci::fs::file_size( path );
 
-	fopen_s( &fileSource, path.string().c_str(), "rb" ); // get a FILE * of the same file
+	fileSource = fopen( path.string().c_str(), "rb" ); // get a FILE * of the same file
 
 	curl_global_init( CURL_GLOBAL_ALL ); // In windows, this will init the winsock stuff
 
